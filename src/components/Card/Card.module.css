@@ -1,0 +1,21 @@
+.container {
+    width: 355.41px;
+    height: 181px;
+    border-radius: 15px;
+    background-color: var(--color-secondary-gray);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.header {
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 34.47px;
+}
+
+.header span {
+    font-weight: 700;
+}

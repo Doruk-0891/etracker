@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--color-tert-gray);
+    box-shadow: 0px 4px 4px 0px var(--color-box-shadow);
+    padding: 32px;
+    border-radius: 10px;
+}
+
+.header {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 36.77px;
+    margin-bottom: 10px;
+}

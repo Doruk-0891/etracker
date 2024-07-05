@@ -10,5 +10,13 @@ const Pill = ({children, type}) => {
     );
 }
 
+export const IconButton = ({children, color}) => {
+    return (
+        <button style={{
+            backgroundColor: color,
+            color: 'var(--color-light)'
+        }} className={styles.roundBtn} >{children}</button>
+    );
+}
 
 export default Pill;

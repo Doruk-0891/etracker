@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "../Card/Card";
+import Graph from "../Graph/Graph";
 import styles from './ETracker.module.css';
 
 const ETrackerWrapper = () => {
@@ -11,6 +12,7 @@ const ETrackerWrapper = () => {
             <div className={styles.container}>
                 <Card type='addIncome' />
                 <Card type='expense' />
+                <Graph type='pie' />
             </div>
         </div>
     );

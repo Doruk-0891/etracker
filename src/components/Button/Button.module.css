@@ -9,3 +9,13 @@
     border-radius: 20px;
     color: var(--color-light);
 }
+
+.roundBtn {
+    width: 37px;
+    height: 37px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px 0px var(--color-box-shadow);
+    outline: none;
+    border: none;
+    font-size: 1.2rem;
+}

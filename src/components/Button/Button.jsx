@@ -10,12 +10,14 @@ const Pill = ({children, type}) => {
     );
 }
 
-export const IconButton = ({children, color}) => {
+export const IconButton = ({children, color, handleExpenses}) => {
     return (
         <button style={{
             backgroundColor: color,
             color: 'var(--color-light)'
-        }} className={styles.roundBtn} >{children}</button>
+        }} className={styles.roundBtn} 
+        onClick={handleExpenses}
+        >{children}</button>
     );
 }
 

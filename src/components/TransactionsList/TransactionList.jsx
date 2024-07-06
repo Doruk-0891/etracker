@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FaRegTimesCircle, FaPen, FaLongArrowAltLeft , FaLongArrowAltRight  } from "react-icons/fa";
+import { FaRegTimesCircle, FaPen } from "react-icons/fa";
 import styles from './TransactionList.module.css';
 import { IconButton } from "../Button/Button";
 import Pagination from '@mui/material/Pagination';
@@ -8,7 +8,7 @@ import { getCategoryIcon } from "../../helpers/helpers";
 
 const TransactionList = () => {
     const {expenses, handleExpenses} = useContext(ExpensesContext);
-    const {walletBalance, expenseAmount, expensesList} = expenses;
+    const {expensesList} = expenses;
 
     return (
             <div className={styles.container}>
@@ -29,7 +29,7 @@ const TransactionList = () => {
                             </div>
                             <div className={styles.listRight}>
                                 <h4>₹{price}</h4>
-                                <IconButton color='var(--color-red)'>
+                                <IconButton color='var(--color-red)' handleExpenses={() => handleExpenses('edit', expense)}>
                                     <FaRegTimesCircle style={{
                                         height: '100%'
                                     }}/>

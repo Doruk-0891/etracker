@@ -38,11 +38,38 @@ function App() {
       ],
   });
 
-  const handleExpenses = (newExpense) => {
+  const handleExpenses = (operation, newExpense) => {
     const expensesList = expenses['expensesList'];
-    setExpenses(prevExpenses => {
-      return {...prevExpenses, 'expensesList': [...expensesList, newExpense]}
-    });
+    switch(operation) {
+      case 'delete':
+        const newExpenseList = expenses['expensesList'].filter((expense) => expense.id !== newExpense.id);
+        setExpenses(prevExpense => {
+          return {...prevExpense, 'expensesList': newExpenseList};
+        });
+        break;
+      
+      case 'add': 
+        setExpenses(prevExpense => {
+          return {...prevExpense, 'expensesList': [...expensesList, newExpense]};
+        });
+        break;
+      
+      case 'edit':
+        let updatedExpense = expensesList;
+        const updatedIndex = expensesList.findIndex(expense => expense.id === newExpense.id);
+        if (updatedIndex === -1) {
+          return;
+        }
+        updatedExpense[updatedIndex] = newExpense;
+        setExpenses(prevExpense => {
+          return {...prevExpense, 'expensesList': updatedExpense}
+        });
+        break;
+
+      default: 
+        console.log('Something went wrong');
+        break;
+    }
   }
   
   return (

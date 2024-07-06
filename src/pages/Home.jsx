@@ -2,6 +2,7 @@ import React from "react";
 import ETrackerWrapper from "../components/ExpenseTrackerWrapper/ETrackerWrapper";
 import TransactionList from "../components/TransactionsList/TransactionList";
 import Graph from "../components/Graph/Graph";
+import styles from  './Home.module.css';
 
 const HomePage = () => {
     return (
@@ -15,7 +16,6 @@ const HomePage = () => {
             <ETrackerWrapper />
             <div style={{
                 display: 'flex',
-                alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: '30px',
                 marginTop: '40px'
@@ -23,37 +23,27 @@ const HomePage = () => {
                 <div style={{
                     flex: '2 1 auto'
                 }}>
-                    <TransactionList />
+                    <div className={styles.wrapper}>
+                        <h2 className={styles.header}>Top Expenses</h2>
+                        <>
+                            <TransactionList />
+                        </>
+                    </div>
                 </div>
                 <div style={{
-                    flex: '1 1 auto',
-                    outline: '1px solid red'
+                    flex: '1 1 auto'
                 }}>
-                    <Graph type='pie' />
+                    <div className={styles.wrapper}>
+                        <h2 className={styles.header}>Top Expenses</h2>
+                        <div className={styles.container}>
+                            <Graph type='bar' />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
-
-
-const dataSet = [
-    {
-        id: 1,
-        category: 'Food',
-        expenses: '150'
-    },
-    {
-        id: 2,
-        category: 'Entertainment',
-        expenses: '300'
-    },
-    {
-        id: 3,
-        category: 'Others',
-        expenses: '1000'
-    }
-];
 
 export default HomePage;
 

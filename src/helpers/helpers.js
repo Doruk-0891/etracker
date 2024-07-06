@@ -1,3 +1,5 @@
+import { FaPizzaSlice, FaGift, FaCar, FaDollarSign  } from "react-icons/fa";
+
 export const getLinearGradient = (type) => {
     switch(type) {
         case 'addIncome':
@@ -17,5 +19,29 @@ export const getColor = (type) => {
             return 'var(--color-gold)';
         default:
             return '';
+    }
+}
+
+
+export const getCategoryIcon = (category) => {
+    switch(category.toLowerCase()) {
+        case 'food':
+            return <FaPizzaSlice style={{
+                height: '100%'
+            }} />;
+        
+        case 'entertainment': 
+            return <FaGift style={{
+                height: '100%'
+            }} />;
+        
+        case 'travel':
+            return <FaCar style={{
+                height: '100%'
+            }} />;
+        default: 
+            return <FaDollarSign style={{
+                height: '100%'
+            }} />; 
     }
 }

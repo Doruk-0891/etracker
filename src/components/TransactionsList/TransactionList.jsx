@@ -1,31 +1,34 @@
-import React from "react";
-import { FaPizzaSlice, FaRegTimesCircle, FaPen, FaLongArrowAltLeft , FaLongArrowAltRight  } from "react-icons/fa";
+import React, { useContext } from "react";
+import { FaRegTimesCircle, FaPen, FaLongArrowAltLeft , FaLongArrowAltRight  } from "react-icons/fa";
 import styles from './TransactionList.module.css';
 import { IconButton } from "../Button/Button";
 import Pagination from '@mui/material/Pagination';
+import { ExpensesContext } from "../../context/context";
+import { getCategoryIcon } from "../../helpers/helpers";
 
 const TransactionList = () => {
-    const tempArr = [1, 2, 3, 4];
+    const {expenses, handleExpenses} = useContext(ExpensesContext);
+    const {walletBalance, expenseAmount, expensesList} = expenses;
+
     return (
-        <div className={styles.wrapper}>
-            <h2 className={styles.header}>Recent  Transactions</h2>
             <div className={styles.container}>
                 {
-                    tempArr.map((temp) => {
-                        return (<div className={styles.listWrapper}>
+                    expensesList.map((expense) => {
+                        const {category, title, price, date, id} = expense;
+                        return (<div className={styles.listWrapper} key={id}>
                             <div className={styles.listLeft}>
                                 <div className={styles.icon}>
-                                    <FaPizzaSlice style={{
-                                        height: '100%'
-                                    }} />
+                                    {
+                                        getCategoryIcon(category)
+                                    }
                                 </div>
                                 <div className={styles.details}>
-                                    <h4>Samosa</h4>
-                                    <h4 className={styles.date}>March 20, 2024</h4>
+                                    <h4>{title}</h4>
+                                    <h4 className={styles.date}>{date}</h4>
                                 </div>
                             </div>
                             <div className={styles.listRight}>
-                                <h4>₹150</h4>
+                                <h4>₹{price}</h4>
                                 <IconButton color='var(--color-red)'>
                                     <FaRegTimesCircle style={{
                                         height: '100%'
@@ -51,7 +54,6 @@ const TransactionList = () => {
 
             </div>
             
-        </div>
     );
 }
 

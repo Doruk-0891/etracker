@@ -32,7 +32,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div style={{
-                    flex: '1 1 auto',
+                    flex: '1 1 250px',
                 }}>
                     <div className={styles.wrapper}>
                         <h2 className={styles.header}>Top Expenses</h2>

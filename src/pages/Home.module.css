@@ -14,7 +14,7 @@
 }
 
 .container {
-    width: 100%;
+    width: '100%';
     min-height: 345px;
     border-radius: 15px;
     box-shadow: 0px 4px 4px 0px var(--color-box-shadow);

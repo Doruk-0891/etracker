@@ -1,0 +1,12 @@
+.dropdown {
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.79px;
+    min-width: 223px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px 0px var(--color-box-shadow);
+    padding: 0.3rem;
+}

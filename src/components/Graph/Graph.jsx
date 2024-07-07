@@ -16,7 +16,19 @@ const Graph = (type) => {
           {
             indexAxis: 'y',
             label: "Expenses: ",
-            data: expensesList.map((expense) => expense.price),
+            data: expensesList.reduce((dataSet, expense) => {
+              const category = expense.category.toLowerCase();
+              if (category === 'food') {
+                dataSet[0] += expense.price;
+              } else if (category === 'entertainment') {
+                dataSet[1] += expense.price;
+              } else if (category === 'travel') {
+                dataSet[2] += expense.price;
+              } else {
+                dataSet[3] += expense.price;
+              }
+              return dataSet;
+            }, [0,0,0,0]),
           }
         ]
       });

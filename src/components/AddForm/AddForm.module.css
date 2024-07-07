@@ -25,6 +25,7 @@ input {
     font-size: 16px;
     font-weight: 400;
     line-height: 21.79px;
+    min-width: 223px;
     outline: none;
     border: none;
     border-radius: 20px;

@@ -21,7 +21,7 @@ const HomePage = () => {
                 marginTop: '40px'
             }}>
                 <div style={{
-                    flex: '2 1 auto'
+                    flex: '2 1 60%',
                 }}>
                     <div className={styles.wrapper}>
                         <h2 className={styles.header}>Top Expenses</h2>
@@ -31,7 +31,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div style={{
-                    flex: '1 1 auto'
+                    flex: '1 1 40%',
                 }}>
                     <div className={styles.wrapper}>
                         <h2 className={styles.header}>Top Expenses</h2>

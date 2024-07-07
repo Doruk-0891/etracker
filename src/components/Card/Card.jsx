@@ -36,8 +36,20 @@ const Card = ({type}) => {
                 </span>
             </h3>
             <Pill type={type} handleFunction={() => {
+                let updatedModalType = {};
+                if (type === 'addIncome') {
+                    updatedModalType = {
+                        type: 'wallet',
+                        data: null
+                    };
+                } else if (type === 'expense') {
+                    updatedModalType = {
+                        type:'expense',
+                        data: null
+                    };
+                }
                 setOpenModal(true);
-                setModalType(() => type === 'addIncome' ? 'wallet': 'expense');
+                setModalType(updatedModalType);
                 }}>
                 {
                     cardType['btnTitle']

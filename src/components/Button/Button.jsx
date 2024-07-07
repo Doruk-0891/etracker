@@ -2,11 +2,15 @@ import React from "react";
 import styles from './Button.module.css';
 import { getLinearGradient } from "../../helpers/helpers";
 
-const Pill = ({children, type}) => {
+const Pill = ({children, type, handleFunction, bgColor, color}) => {
     return (
         <button style={{
-            backgroundImage: getLinearGradient(type)
-        }} className={styles.button}>{children}</button>
+            backgroundImage: getLinearGradient(type),
+            backgroundColor: bgColor,
+            color: color
+        }} className={styles.button}
+        onClick={handleFunction}
+        >{children}</button>
     );
 }
 

@@ -8,6 +8,7 @@
     border: none;
     border-radius: 20px;
     color: var(--color-light);
+    box-shadow: 0px 4px 4px 0px var(--color-box-shadow);
 }
 
 .roundBtn {

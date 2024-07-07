@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { ExpensesContext } from "./context/context";
+import { ExpensesContext, ModalOpenCloseContext, ModalTypeContext } from "./context/context";
+import AddWallet from "./components/AddForm/AddWallet";
 
 function App() {
   const [expenses, setExpenses] = useState({
@@ -38,8 +39,12 @@ function App() {
       ],
   });
 
+  const [openModal, setOpenModal] = useState(false);
+
+  const [modalType, setModalType] = useState('');
+
   const handleExpenses = (operation, newExpense) => {
-    const expensesList = expenses['expensesList'];
+    const {expensesList, walletBalance, expenseAmount} = expenses;
     switch(operation) {
       case 'delete':
         const newExpenseList = expenses['expensesList'].filter((expense) => expense.id !== newExpense.id);
@@ -65,18 +70,35 @@ function App() {
           return {...prevExpense, 'expensesList': updatedExpense}
         });
         break;
+      
+      case 'addToWallet': 
+        setExpenses(prevExpense => {
+          return {...prevExpense, 'walletBalance': walletBalance+newExpense};
+        });
+        break;
+      
+      case 'removeFromWallet': 
+        setExpenses(prevExpense => {
+          return {...prevExpense, 'walletBalance': walletBalance-newExpense, 'expenseAmount': expenseAmount+newExpense};
+        });
+        break;
 
       default: 
         console.log('Something went wrong');
         break;
     }
   }
-  
+
   return (
     <ExpensesContext.Provider value={{expenses, handleExpenses}}>
-      <div className="App">
-        <Outlet />
-      </div>
+      <ModalOpenCloseContext.Provider value={{openModal, setOpenModal}}>
+        <ModalTypeContext.Provider value={{modalType, setModalType}}>
+          <div className="App">
+            <AddWallet />
+            <Outlet />
+          </div>
+        </ModalTypeContext.Provider>
+      </ModalOpenCloseContext.Provider>
     </ExpensesContext.Provider>
   );
 }

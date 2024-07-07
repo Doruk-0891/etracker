@@ -29,7 +29,7 @@ const TransactionList = () => {
                             </div>
                             <div className={styles.listRight}>
                                 <h4>₹{price}</h4>
-                                <IconButton color='var(--color-red)' handleExpenses={() => handleExpenses('edit', expense)}>
+                                <IconButton color='var(--color-red)' handleExpenses={() => handleExpenses('delete', expense)}>
                                     <FaRegTimesCircle style={{
                                         height: '100%'
                                     }}/>

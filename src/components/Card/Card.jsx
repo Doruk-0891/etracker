@@ -2,12 +2,17 @@ import React, { useContext } from "react";
 import Pill from "../Button/Button";
 import styles from './Card.module.css';
 import { getColor } from "../../helpers/helpers";
-import { ExpensesContext } from "../../context/context";
+import { ExpensesContext, ModalOpenCloseContext, ModalTypeContext } from "../../context/context";
 
 const Card = ({type}) => {
     const {expenses, handleExpenses} = useContext(ExpensesContext);
+    const {openModal, setOpenModal} = useContext(ModalOpenCloseContext);
+    const {modalType, setModalType} = useContext(ModalTypeContext);
+
     const {walletBalance, expenseAmount, expensesList} = expenses;
+
     const cardColorType = getColor(type);
+
     const cardType = type === 'addIncome' 
     ? {
         btnTitle: '+ Add Income',
@@ -19,7 +24,7 @@ const Card = ({type}) => {
         btnTitle: '+ Add Expense',
         color: cardColorType,
         title: 'Expenses: ',
-        amount: expenseAmount
+        amount: expenseAmount,
     };
 
     return (
@@ -30,7 +35,10 @@ const Card = ({type}) => {
                     ₹{cardType['amount']}
                 </span>
             </h3>
-            <Pill type={type}>
+            <Pill type={type} handleFunction={() => {
+                setOpenModal(true);
+                setModalType(() => type === 'addIncome' ? 'wallet': 'expense');
+                }}>
                 {
                     cardType['btnTitle']
                 }

@@ -17,11 +17,12 @@ const HomePage = () => {
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
+                flexWrap: 'wrap',
                 gap: '30px',
                 marginTop: '40px'
             }}>
                 <div style={{
-                    flex: '2 1 60%',
+                    flex: '2 1 auto',
                 }}>
                     <div className={styles.wrapper}>
                         <h2 className={styles.header}>Top Expenses</h2>
@@ -31,7 +32,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div style={{
-                    flex: '1 1 40%',
+                    flex: '1 1 auto',
                 }}>
                     <div className={styles.wrapper}>
                         <h2 className={styles.header}>Top Expenses</h2>

@@ -18,7 +18,7 @@ const getChart = (type, chartData) => {
             return <Bar data={chartData} options={
               {
                 layout: {
-                  minWidth: '300px',
+                  minWidth: '340px',
                   height: '100%'
                 }
               }

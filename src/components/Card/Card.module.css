@@ -1,5 +1,5 @@
 .container {
-    width: 355.41px;
+    width: 340px;
     height: 181px;
     border-radius: 15px;
     background-color: var(--color-secondary-gray);
@@ -8,6 +8,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+    padding: 20px;
 }
 
 .header {
@@ -18,4 +19,11 @@
 
 .header span {
     font-weight: 700;
+}
+
+@media screen  and (max-width: 500px) {
+    .container {
+        width: 95%;
+        text-align: center;
+    }
 }

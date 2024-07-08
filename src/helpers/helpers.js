@@ -49,3 +49,10 @@ export const getCategoryIcon = (category) => {
 export const capitalizeText = (text) => {
     return text.charAt(0).toUpperCase()+text.slice(1);
 }
+
+export const setLocalStorage = (expense) => {
+    const {walletBalance, expenseAmount, expensesList} = expense;
+    localStorage.setItem('walletBalance', walletBalance);
+    localStorage.setItem('expenseAmount', expenseAmount);
+    localStorage.setItem('expensesList', JSON.stringify(expensesList));
+}

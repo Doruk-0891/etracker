@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import Modal from '@mui/material/Modal';
 import { ExpensesContext, ModalOpenCloseContext, ModalTypeContext } from "../../context/context";
 import styles from './AddForm.module.css';
@@ -6,6 +6,7 @@ import Pill from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 import {CATEGORY} from '../../constants/constant';
 import { capitalizeText } from "../../helpers/helpers";
+import { useSnackbar } from "notistack";
 
 const AddWallet = () => {
     const [addedAmount, setAddedAmount] = useState('');
@@ -15,28 +16,83 @@ const AddWallet = () => {
     const [selectedDate, setSelectedDate] = useState('');
 
     const {openModal, setOpenModal} = useContext(ModalOpenCloseContext);
-    const {handleExpenses} = useContext(ExpensesContext);
+    const {expenses, handleExpenses} = useContext(ExpensesContext);
     const {modalType} = useContext(ModalTypeContext);
 
+    const {enqueueSnackbar} = useSnackbar();
+
     const handleAddExpense = () => {
-        const newExpense = {
-            "title": capitalizeText(title), 
-            "price": +price, 
-            category, 
-            "date": selectedDate, 
-            "id": !modalType['data'] ? Date.now() : modalType['data']['id']
-        };
-        
-        if (!modalType['data']) {
-            handleExpenses('add', newExpense);
-        } else {
-            handleExpenses('edit', newExpense);
+        try {
+            if (!title || !price || !category || !selectedDate) {
+                enqueueSnackbar('Seems like some fields are missing.', {variant: 'warning'});
+                return;
+            }
+            if (expenses['walletBalance']-(+price) < 0) {
+                enqueueSnackbar("Not enough amount. Time to add balance into your wallet to add the expenses.", {variant: 'error'});
+                return;
+            }
+            const newExpense = {
+                "title": capitalizeText(title), 
+                "price": +price, 
+                category, 
+                "date": selectedDate, 
+                "id": !modalType['data'] ? Date.now() : modalType['data']['id']
+            };
+            
+            if (!modalType['data']) {
+                handleExpenses('add', newExpense);
+                enqueueSnackbar('We got one more expense.', {variant:'success'});
+            } else {
+                handleExpenses('edit', newExpense);
+                enqueueSnackbar('Expense got updated successfully', {variant: 'success'});
+            }
+            setTitle('');
+            setCategory('');
+            setPrice('');
+            setSelectedDate('');
+            setOpenModal(false);
+            
+        } catch (error) {
+            console.error(error);
+            enqueueSnackbar('Oops! Something went wrong.', {variant: 'error'});
         }
+    }
+
+    const handleAddToWallet = () => {
+        try {
+            if (!addedAmount) {
+                enqueueSnackbar('Please make sure valid amount has to be added.', {variant: 'warning'});
+                return;
+            }
+            handleExpenses('addToWallet', +addedAmount);
+            setAddedAmount('');
+            setOpenModal(false);
+            enqueueSnackbar('Wallet updated successfully!', {variant: 'success'});
+        } catch (error) {
+            console.error(error);
+            enqueueSnackbar('Oops! Something went wrong.', {variant: 'error'});
+        }
+    }
+
+    const cancelWallet = () => {
+        setAddedAmount('');
+        setOpenModal(false);
+    }
+
+    const cancelAddEditExpense = () => {
         setTitle('');
         setCategory('');
         setPrice('');
         setSelectedDate('');
         setOpenModal(false);
+    }
+
+    const getHeading = () => {
+        return modalType['type'] === 'wallet' 
+                                ? 'Add Balance' 
+                                : modalType['type'] === 'expense' && !modalType['data']
+                                ? 'Add Expenses'
+                                : 'Edit Expenses'
     }
 
     const getForm = (type) => {
@@ -48,16 +104,11 @@ const AddWallet = () => {
                                     <input type="number" min='0' placeholder="Income Amount" value={addedAmount} onChange={(e) => setAddedAmount(e.target.value)} />
                                 </div>
                                 <div className={styles.btnContainer}>
-                                    <Pill bgColor='var(--color-gold)' handleFunction={() => {
-                                        handleExpenses('addToWallet', +addedAmount);
-                                        setAddedAmount('');
-                                        setOpenModal(false);
-                                    }} >Add Amount</Pill>
+                                    <Pill bgColor='var(--color-gold)' handleFunction={handleAddToWallet}>
+                                        Add Amount
+                                    </Pill>
                                     <Pill bgColor='var(--color-light)' color='var(--color-dark)'
-                                    handleFunction={() => {
-                                        setAddedAmount('');
-                                        setOpenModal(false);
-                                    }}
+                                    handleFunction={cancelWallet}
                                     >Cancel</Pill>
                                 </div>
                             </div>
@@ -80,10 +131,7 @@ const AddWallet = () => {
                                             !modalType['data'] ? 'Add Expense' : 'Edit Expense'
                                         }</Pill>
                                     <Pill bgColor='var(--color-light)' color='var(--color-dark)'
-                                    handleFunction={() => {
-                                        setAddedAmount('');
-                                        setOpenModal(false);
-                                    }}
+                                    handleFunction={cancelAddEditExpense}
                                     >Cancel</Pill>
                                 </div>
                             </div>
@@ -100,11 +148,7 @@ const AddWallet = () => {
                 <div className={styles.container}>
                         <h2 className={styles.header}>
                             {
-                                modalType['type'] === 'wallet' 
-                                ? 'Add Balance' 
-                                : modalType['type'] === 'expense' && !modalType['data']
-                                ? 'Add Expenses'
-                                : 'Edit Expenses'
+                                getHeading()
                             }
                         </h2>
                         {

@@ -6,6 +6,7 @@ import Pagination from '@mui/material/Pagination';
 import { ExpensesContext, ModalOpenCloseContext, ModalTypeContext } from "../../context/context";
 import { getCategoryIcon } from "../../helpers/helpers";
 import { PER_PAGE } from "../../constants/constant";
+import { useSnackbar } from "notistack";
 
 const TransactionList = () => {
     const [page, setPage] = useState({
@@ -16,6 +17,7 @@ const TransactionList = () => {
     const {openModal, setOpenModal} = useContext(ModalOpenCloseContext);
     const {modalType, setModalType} = useContext(ModalTypeContext);
     const [paginatedList, setPaginatedList] = useState(expenses['expensesList'].slice(0, PER_PAGE));
+    const {enqueueSnackbar} = useSnackbar();
     const {expensesList} = expenses;
 
     const handlePagination = (e, value) => {  
@@ -23,6 +25,29 @@ const TransactionList = () => {
         const updatedPaginatedList = expensesList.slice(updatedIndex, updatedIndex+PER_PAGE);
         setPage({pageCount: value, index: updatedIndex});
         setPaginatedList(updatedPaginatedList);
+    }
+
+    const handleDeleteExpense = (expense) => {
+        try {
+            handleExpenses('delete', expense);
+            enqueueSnackbar('Expense deleted succesfully!', {variant: 'success'});
+        } catch (error) {
+            console.error(error);
+            enqueueSnackbar('Oops! Something went wrong.', {variant: 'error'});
+        }
+    }
+
+    const handleEditExpense = (expense) => {
+        try {
+            setOpenModal(true);
+            setModalType({
+                type:'expense',
+                data: {...expense}
+            });
+        } catch (error) {
+            console.error(error);
+            enqueueSnackbar('Oops! Something went wrong.', {variant: 'error'});
+        }
     }
 
     return (
@@ -44,17 +69,13 @@ const TransactionList = () => {
                             </div>
                             <div className={styles.listRight}>
                                 <h4>₹{price}</h4>
-                                <IconButton color='var(--color-red)' handleExpenses={() => handleExpenses('delete', expense)}>
+                                <IconButton color='var(--color-red)' handleExpenses={() => handleDeleteExpense(expense)}>
                                     <FaRegTimesCircle style={{
                                         height: '100%'
                                     }}/>
                                 </IconButton>
                                 <IconButton color='var(--color-gold)' handleExpenses={() => {
-                                    setOpenModal(true);
-                                    setModalType({
-                                        type:'expense',
-                                        data: {...expense}
-                                    });
+                                    handleEditExpense(expense)
                                 }}>
                                     <FaPen style={{
                                         height: '100%'

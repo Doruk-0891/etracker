@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { ExpensesContext } from "../../context/context";
@@ -28,10 +28,36 @@ const Graph = (type) => {
                 dataSet[3] += expense.price;
               }
               return dataSet;
-            }, [0,0,0,0]),
+            }, [...Array(CATEGORY.length)].fill(0)),
           }
         ]
       });
+
+      useEffect(() => {
+        const updatedData = expensesList.reduce((dataSet, expense) => {
+          const category = expense.category.toLowerCase();
+          if (category === 'food') {
+            dataSet[0] += expense.price;
+          } else if (category === 'entertainment') {
+            dataSet[1] += expense.price;
+          } else if (category === 'travel') {
+            dataSet[2] += expense.price;
+          } else {
+            dataSet[3] += expense.price;
+          }
+          return dataSet;
+        }, [...Array(CATEGORY.length)].fill(0));
+        setChartData({
+          labels: CATEGORY, 
+          datasets: [
+            {
+              indexAxis: 'y',
+              label: "Expenses: ",
+              data: updatedData,
+            }
+          ]
+        });
+      }, [expenses]);
     return (
         <div>
             <ChartComponent chartData={chartData} type={type} />

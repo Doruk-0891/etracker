@@ -20,6 +20,10 @@ const TransactionList = () => {
     const {enqueueSnackbar} = useSnackbar();
     const {expensesList} = expenses;
 
+    useEffect(() => {
+        setPaginatedList(expenses['expensesList'].slice(page['index'], page['index']+PER_PAGE));
+    }, [expenses]);
+
     const handlePagination = (e, value) => {  
         const updatedIndex = value > page['pageCount'] ? page['index']+PER_PAGE : page['index']-PER_PAGE;
         const updatedPaginatedList = expensesList.slice(updatedIndex, updatedIndex+PER_PAGE);

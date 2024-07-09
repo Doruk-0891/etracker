@@ -10,7 +10,10 @@ const Dropdown = ({listOfOptions, setSelectedOption}) => {
     return (
         <select onChange={(e) => handleDropdown(e.target.value)} className={styles.dropdown} >
             {
-                listOfOptions.map((item) => {
+                listOfOptions.map((item, idx) => {
+                    if (idx === 0) {
+                        return <option value='' disabled key={idx} selected>Select category</option>
+                    }
                     return <option key={item} value={item}>{item}</option>;
                 })
             }

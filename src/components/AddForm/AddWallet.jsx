@@ -9,15 +9,16 @@ import { capitalizeText } from "../../helpers/helpers";
 import { useSnackbar } from "notistack";
 
 const AddWallet = () => {
+    const {openModal, setOpenModal} = useContext(ModalOpenCloseContext);
+    const {expenses, handleExpenses} = useContext(ExpensesContext);
+    const {modalType} = useContext(ModalTypeContext);
+
     const [addedAmount, setAddedAmount] = useState('');
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [category, setCategory] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
 
-    const {openModal, setOpenModal} = useContext(ModalOpenCloseContext);
-    const {expenses, handleExpenses} = useContext(ExpensesContext);
-    const {modalType} = useContext(ModalTypeContext);
 
     const {enqueueSnackbar} = useSnackbar();
 

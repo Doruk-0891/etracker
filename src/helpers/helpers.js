@@ -56,3 +56,12 @@ export const setLocalStorage = (expense) => {
     localStorage.setItem('expenseAmount', expenseAmount);
     localStorage.setItem('expensesList', JSON.stringify(expensesList));
 }
+
+export const getDateInFormat = (date) => {
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+    return date.toLocaleDateString(undefined, options);
+}

@@ -4,7 +4,7 @@ import styles from './TransactionList.module.css';
 import { IconButton } from "../Button/Button";
 import Pagination from '@mui/material/Pagination';
 import { ExpensesContext, ModalOpenCloseContext, ModalTypeContext } from "../../context/context";
-import { getCategoryIcon } from "../../helpers/helpers";
+import { getCategoryIcon, getDateInFormat } from "../../helpers/helpers";
 import { PER_PAGE } from "../../constants/constant";
 import { useSnackbar } from "notistack";
 
@@ -68,7 +68,7 @@ const TransactionList = () => {
                                 </div>
                                 <div className={styles.details}>
                                     <h4>{title}</h4>
-                                    <h4 className={styles.date}>{date}</h4>
+                                    <h4 className={styles.date}>{getDateInFormat(new Date(date))}</h4>
                                 </div>
                             </div>
                             <div className={styles.listRight}>
